@@ -1,0 +1,34 @@
+{
+  "name": "@kungfu-trader/action-generate-download-page",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/kungfu-trader/action-generate-download-pagee",
+  "author": "Kungfu Trader",
+  "scripts": {
+    "postinstall": "patch-package",
+    "build": "esbuild index.js --bundle --minify --outfile=dist/index.js --platform=node",
+    "format": "prettier --write --parser typescript \"*.js\"",
+    "lint": "eslint --ext .js ."
+  },
+  "dependencies": {
+    "@actions/core": "^1.8.0",
+    "@actions/github": "^5.0.0",
+    "@octokit/rest": "^19.0.7",
+    "@yarnpkg/lockfile": "^1.1.0",
+    "axios": "^1.6.2",
+    "glob": "^10.3.10",
+    "lodash.chunk": "^4.2.0",
+    "lodash.sortby": "^4.7.0",
+    "marked": "^11.1.0",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@ls-lint/ls-lint": "^1.9.0",
+    "@typescript-eslint/parser": "^3.10.0",
+    "esbuild": "^0.19.2",
+    "eslint": "^7.14.0",
+    "patch-package": "^8.0.0",
+    "prettier": "^2.3.0",
+    "prettier-eslint-cli": "^5.0.0"
+  }
+}

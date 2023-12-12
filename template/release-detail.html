@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e9ecef">
+    <link href="https://cdn.staticfile.org/layui/2.8.18/css/layui.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/layui/2.8.18/layui.min.js"></script>
+    <style>
+        html,
+        body {
+            background-color: #fff;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+            font-size: 15px;
+        }
+
+        .container {
+            box-sizing: border-box;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .panel {
+            box-sizing: border-box;
+            min-height: 400px;
+            min-height: calc(100vh - 234px);
+            padding-bottom: 36px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        @media (min-width: 578px) {
+            .container {
+                max-width: 100%;
+            }
+
+        }
+
+        @media (max-width: 922px) {
+
+            html,
+            body {
+                font-size: 13.68px;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1240px;
+            }
+        }
+
+
+        .header {
+            background-color: rgba(0, 0, 0, .8);
+            min-height: 78px;
+            user-select: none;
+        }
+
+        .custom-logo-wrap {
+            display: block;
+            height: 78px;
+            margin-left: 20px;
+        }
+
+        .custom-logo {
+            display: block;
+            margin-top: -2px;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 100%;
+        }
+
+        @media (max-width: 922px) {
+            .layui-panel {
+                margin-top: 24px !important;
+            }
+        }
+
+        .layui-btn-container {
+            padding-bottom: .5em;
+        }
+
+        .footer {
+            height: 80px;
+            text-align: center;
+            background-color: #eeeeee;
+            padding: 20px 1em;
+            color: #4b4f58;
+            line-height: 24px;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+        }
+
+        a {
+            color: #0170b9;
+            text-decoration: none;
+        }
+
+        .link-wrap {
+            margin-right: 16px;
+        }
+
+        .link-wrap .layui-btn {
+            margin: 0;
+        }
+
+        .layui-bg-blue {
+            background: #0066B8;
+        }
+
+        #table-container {
+            transition: all .2s;
+        }
+
+        .description {
+            line-height: 1.8;
+        }
+
+        .description p {
+            margin: 8px 0;
+        }
+
+        .description li {
+            margin-left: 1.5em;
+            list-style: disc;
+        }
+
+        .description code {
+            background-color: #eee;
+        }
+
+        .description>h1:first-child {
+            display: none;
+        }
+
+        .layui-btn,
+        .layui-bg-orange {
+            background-color: #FAAC15;
+        }
+
+        .notes-download {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5em;
+            margin-bottom: 1.2em;
+        }
+    </style>
+    <title>{{artifactName}} {{version}}</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <a class="custom-logo-wrap" href="https://www.kungfu-trader.com/">
+                <img width="300" height="82"
+                    src="https://s3.cn-northwest-1.amazonaws.com.cn/users.kungfu-trader.com/uploads/2023/11/cropped-log-18-300x82.png"
+                    class="custom-logo" alt="" decoding="async"
+                    srcset="https://s3.cn-northwest-1.amazonaws.com.cn/users.kungfu-trader.com/uploads/2023/11/cropped-log-18-300x82.png 300w, https://s3.cn-northwest-1.amazonaws.com.cn/users.kungfu-trader.com/uploads/2023/11/cropped-log-18-768x211.png 768w, https://s3.cn-northwest-1.amazonaws.com.cn/users.kungfu-trader.com/uploads/2023/11/cropped-log-18-600x165.png 600w, https://s3.cn-northwest-1.amazonaws.com.cn/users.kungfu-trader.com/uploads/2023/11/cropped-log-18.png 860w"
+                    sizes="(max-width: 300px) 100vw, 300px">
+            </a>
+        </div>
+    </header>
+    <section section class="container panel">
+        <h2 style="margin: 36px 0 18px;">{{artifactName}} {{version}}</h2>
+        {{#hasNotes}}
+        <div>
+            <div class="notes-download">
+                <h3>Release notes</h3>
+                <button class="layui-btn demo-dropdown-base">
+                    下载Release notes
+                </button>
+            </div>
+            <div id="release-notes" class="description">{{{notes}}}</div>
+        </div>
+        {{/hasNotes}}
+        <div>
+            <div class="notes-download">
+                <h3>Download</h3>
+            </div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Platform</th>
+                        <th scope="col">Download</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#tableItem}}
+                    <tr>
+                        <th scope="row">
+                            {{#platform}}
+                            <span class="layui-badge layui-bg-orange">{{platform}}</span>
+                            {{/platform}}
+                        </th>
+                        <td><a href="{{{url}}}" download>{{name}}</a></td>
+                        <td>{{size}}</td>
+                        <td>{{date}}</td>
+                    </tr>
+                    {{/tableItem}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <footer class="footer">
+        Copyright © 2023 [北京功夫源科技发展有限责任公司] |&nbsp;<a href="https://beian.miit.gov.cn/" target="_blank"
+            rel="noopener">京ICP备19056728号-1 </a>&nbsp; &nbsp; &nbsp;<a
+            href="https://dev.kungfu-trader.com/index.php/user_agreement/" target="_blank" rel="noopener">
+            [用户协议]</a>&nbsp; &nbsp; <a href="https://dev.kungfu-trader.com/index.php/privacy_policy" target="_blank"
+            rel="noopener">[隐私政策]</a>&nbsp; &nbsp; <a href="https://dev.kungfu-trader.com/index.php/disclaimer/"
+            target="_blank" rel="noopener">[免责声明]</a>
+    </footer>
+    <script>
+        function printReleaseNote() {
+            var notesContainer = document.getElementById('release-notes');
+            notesContainer.addEventListener('click', function (event) {
+                if (event.target.tagName.toUpperCase() === 'A') {
+                    event.preventDefault();
+                    window.open(event.target.href)
+                }
+            });
+        }
+        window.onload = function () {
+            printReleaseNote();
+        }
+    </script>
+    <script>
+        layui.use(function () {
+            var dropdown = layui.dropdown;
+            const data = [{
+                title: '下载pdf',
+                id: 'pdf',
+                url: '{{{pdfUrl}}}',
+            }, {
+                title: '下载html',
+                id: 'html',
+                url: '{{{htmlUrl}}}'
+            }, {
+                title: '下载markdown',
+                id: 'md',
+                url: '{{{mdUrl}}}'
+            }, {
+                title: '下载rst',
+                id: 'rst',
+                url: '{{{rstUrl}}}'
+            }].filter(v => v.url)
+
+            dropdown.render({
+                elem: '.demo-dropdown-base',
+                data,
+                templet: function (d) {
+                    return `<div>
+                            <a href="${d.url}" target="_blank" download>${d.title}</a>
+                        </div>`;
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
