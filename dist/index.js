@@ -22618,9 +22618,9 @@ var require_cjs2 = __commonJS({
   }
 });
 
-// node_modules/glob/dist/commonjs/pattern.js
+// node_modules/glob/dist/cjs/src/pattern.js
 var require_pattern = __commonJS({
-  "node_modules/glob/dist/commonjs/pattern.js"(exports2) {
+  "node_modules/glob/dist/cjs/src/pattern.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Pattern = void 0;
@@ -22792,9 +22792,9 @@ var require_pattern = __commonJS({
   }
 });
 
-// node_modules/glob/dist/commonjs/ignore.js
+// node_modules/glob/dist/cjs/src/ignore.js
 var require_ignore = __commonJS({
-  "node_modules/glob/dist/commonjs/ignore.js"(exports2) {
+  "node_modules/glob/dist/cjs/src/ignore.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Ignore = void 0;
@@ -22827,9 +22827,6 @@ var require_ignore = __commonJS({
           for (let i = 0; i < mm.set.length; i++) {
             const parsed = mm.set[i];
             const globParts = mm.globParts[i];
-            if (!parsed || !globParts) {
-              throw new Error("invalid pattern object");
-            }
             const p = new pattern_js_1.Pattern(parsed, globParts, 0, platform);
             const m = new minimatch_1.Minimatch(p.globString(), mmopts);
             const children = globParts[globParts.length - 1] === "**";
@@ -22871,7 +22868,7 @@ var require_ignore = __commonJS({
         }
         for (const m of this.absoluteChildren) {
           if (m.match(fullpath))
-            return true;
+            true;
         }
         return false;
       }
@@ -22880,9 +22877,9 @@ var require_ignore = __commonJS({
   }
 });
 
-// node_modules/glob/dist/commonjs/processor.js
+// node_modules/glob/dist/cjs/src/processor.js
 var require_processor = __commonJS({
-  "node_modules/glob/dist/commonjs/processor.js"(exports2) {
+  "node_modules/glob/dist/cjs/src/processor.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Processor = exports2.SubWalks = exports2.MatchRecord = exports2.HasWalkedCache = void 0;
@@ -22992,6 +22989,8 @@ var require_processor = __commonJS({
           let changed = false;
           while (typeof (p = pattern.pattern()) === "string" && (rest = pattern.rest())) {
             const c = t.resolve(p);
+            if (c.isUnknown() && p !== "..")
+              break;
             t = c;
             pattern = rest;
             changed = true;
@@ -23004,8 +23003,12 @@ var require_processor = __commonJS({
             this.hasWalkedCache.storeWalked(t, pattern);
           }
           if (typeof p === "string") {
-            const ifDir = p === ".." || p === "" || p === ".";
-            this.matches.add(t.resolve(p), absolute, ifDir);
+            if (!rest) {
+              const ifDir = p === ".." || p === "" || p === ".";
+              this.matches.add(t.resolve(p), absolute, ifDir);
+            } else {
+              this.subwalks.add(t, pattern);
+            }
             continue;
           } else if (p === minimatch_1.GLOBSTAR) {
             if (!t.isSymbolicLink() || this.follow || pattern.checkFollowGlobstar()) {
@@ -23113,9 +23116,9 @@ var require_processor = __commonJS({
   }
 });
 
-// node_modules/glob/dist/commonjs/walker.js
+// node_modules/glob/dist/cjs/src/walker.js
 var require_walker = __commonJS({
-  "node_modules/glob/dist/commonjs/walker.js"(exports2) {
+  "node_modules/glob/dist/cjs/src/walker.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.GlobStream = exports2.GlobWalker = exports2.GlobUtil = void 0;
@@ -23430,9 +23433,9 @@ var require_walker = __commonJS({
   }
 });
 
-// node_modules/glob/dist/commonjs/glob.js
+// node_modules/glob/dist/cjs/src/glob.js
 var require_glob = __commonJS({
-  "node_modules/glob/dist/commonjs/glob.js"(exports2) {
+  "node_modules/glob/dist/cjs/src/glob.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Glob = void 0;
@@ -23570,10 +23573,7 @@ var require_glob = __commonJS({
           return set;
         }, [[], []]);
         this.patterns = matchSet.map((set, i) => {
-          const g = globParts[i];
-          if (!g)
-            throw new Error("invalid pattern object");
-          return new pattern_js_1.Pattern(set, g, 0, this.platform);
+          return new pattern_js_1.Pattern(set, globParts[i], 0, this.platform);
         });
       }
       async walk() {
@@ -23637,9 +23637,9 @@ var require_glob = __commonJS({
   }
 });
 
-// node_modules/glob/dist/commonjs/has-magic.js
+// node_modules/glob/dist/cjs/src/has-magic.js
 var require_has_magic = __commonJS({
-  "node_modules/glob/dist/commonjs/has-magic.js"(exports2) {
+  "node_modules/glob/dist/cjs/src/has-magic.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.hasMagic = void 0;
@@ -23658,9 +23658,9 @@ var require_has_magic = __commonJS({
   }
 });
 
-// node_modules/glob/dist/commonjs/index.js
-var require_commonjs3 = __commonJS({
-  "node_modules/glob/dist/commonjs/index.js"(exports2) {
+// node_modules/glob/dist/cjs/src/index.js
+var require_src2 = __commonJS({
+  "node_modules/glob/dist/cjs/src/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.glob = exports2.hasMagic = exports2.Glob = exports2.unescape = exports2.escape = exports2.sync = exports2.iterate = exports2.iterateSync = exports2.stream = exports2.streamSync = exports2.globIterate = exports2.globIterateSync = exports2.globSync = exports2.globStream = exports2.globStreamSync = void 0;
@@ -31677,7 +31677,7 @@ var require_utils = __commonJS({
   "lib/utils.js"(exports2, module2) {
     var path = require("path");
     var fs = require("fs");
-    var glob = require_commonjs3();
+    var glob = require_src2();
     var { spawnSync } = require("child_process");
     var lockfile = require_lockfile();
     var getCurrentYarnLock = () => {
