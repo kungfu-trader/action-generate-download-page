@@ -32113,26 +32113,7 @@ var require_lib = __commonJS({
         (v) => v.name.endsWith(`/${argv.artifactName}`)
       );
       const deps = Object.keys(artifact?.dependencies ?? {});
-      const items = [
-        "@kungfu-trader/kungfu-js-api",
-        "@kungfu-trader/kungfu-app",
-        "@kungfu-trader/kungfu-cli",
-        "@kungfu-trader/kungfu-core",
-        "@kungfu-trader/kungfu-sdk",
-        "@kungfu-trader/kungfu-toolchain",
-        "@kungfu-trader/kfx-operator-bar",
-        "@kungfu-trader/kfx-indexer-live",
-        "@kungfu-trader/kfx-matcher-101-cpp",
-        "@kungfu-trader/kfx-broker-sim",
-        "@kungfu-trader/kfx-broker-xtp-demo",
-        "@kungfu-trader/examples-operator-cpp",
-        "@kungfu-trader/examples-operator-python",
-        "@kungfu-trader/example-report-cpp",
-        "@kungfu-trader/example-report-python",
-        "@kungfu-trader/examples-data-tool",
-        "@kungfu-trader/examples-strategy-cpp",
-        "@kungfu-trader/examples-strategy-python"
-      ];
+      const items = artifact ? getPkgNameMap(false).filter((v) => deps.includes(v) || v.includes("/example")).sort() : [];
       const tableItem = await Promise.all([
         getDownloadList(argv, downloadBaseUrl2, argv.artifactName),
         ...items.map(
