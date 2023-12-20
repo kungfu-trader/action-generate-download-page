@@ -13,14 +13,6 @@ const main = async function () {
     repo: context.payload.repository.name,
     pullRequestTitle: context.payload?.pull_request?.title,
   };
-  console.log({
-    bucketRelease: core.getInput("kungfu-releases"),
-    bucketPrebuilt: core.getInput("kungfu-prebuilt"),
-    baseId: core.getInput("airtable-baseid"),
-    owner: context.payload.repository.owner.login,
-    repo: context.payload.repository.name,
-    pullRequestTitle: context.payload?.pull_request?.title,
-  })
   lib.generateHTML(argv);
 };
 
